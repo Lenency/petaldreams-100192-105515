@@ -51,7 +51,7 @@ function AnimatedPetalsBackground({ theme }) {
     // Render SVG for sakura flower
     petalEls.push(
       <div
-        key={i}
+        key={`petal-${i}`}
         className="petal cherry-sakura"
         style={{
           left: `${left}%`,
@@ -131,6 +131,74 @@ function AnimatedPetalsBackground({ theme }) {
     );
   }
 
+  // Generate floating soft green leaves with animation mirroring petals
+  const leafCount = 7;
+  const leafEls = [];
+  for (let i = 0; i < leafCount; i++) {
+    const time = 15 + Math.random() * 11;
+    const delay = -Math.random() * time;
+    const left = 8 + Math.random() * 84;
+    const size = 32 + Math.random() * 22;
+    const rotation = Math.random() * 360;
+    const opacity = 0.48 + Math.random() * 0.22;
+    const pastelGreen = theme === "dark" ? "#7beccf" : "#B5EAD7";
+    const accentGreen = theme === "dark" ? "#28cc8e" : "#83d19c";
+    // Render SVG leaf
+    leafEls.push(
+      <div
+        key={`leaf-${i}`}
+        className="leaf floating-leaf"
+        style={{
+          left: `${left}%`,
+          width: size,
+          height: size,
+          opacity,
+          animationDuration: `${time}s`,
+          animationDelay: `${delay}s`,
+          transform: `rotate(${rotation}deg)`,
+        }}
+      >
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 38 50"
+          style={{ display: "block" }}
+          fill="none"
+        >
+          <g>
+            <path
+              d="M19 49 Q30 40 36 26 Q37 7 19 1 Q1 7 2 26 Q8 40 19 49 Z"
+              fill={pastelGreen}
+              opacity="0.82"
+              style={{ filter: "blur(0.2px)" }}
+            />
+            <path
+              d="M19 49 Q30 40 36 26 Q37 7 19 1"
+              stroke={accentGreen}
+              strokeWidth="1"
+              opacity="0.46"
+              fill="none"
+            />
+            <path
+              d="M19 49 Q8 40 2 26 Q1 7 19 1"
+              stroke={accentGreen}
+              strokeWidth="0.8"
+              opacity="0.36"
+              fill="none"
+            />
+            <line
+              x1="19" y1="49"
+              x2="19" y2="2.6"
+              stroke={accentGreen}
+              strokeWidth="0.6"
+              opacity="0.6"
+            />
+          </g>
+        </svg>
+      </div>
+    );
+  }
+
   // Drifting sparkles
   const sparkleCount = 13;
   const sparkleEls = [];
@@ -174,6 +242,7 @@ function AnimatedPetalsBackground({ theme }) {
         }}
       ></div>
       <div className="petal-layer">{petalEls}</div>
+      <div className="leaf-layer">{leafEls}</div>
       <div className="sparkle-layer">{sparkleEls}</div>
       {/* Soft overlay for glow/fade */}
       <div className="soft-overlay" />

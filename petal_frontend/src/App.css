@@ -92,7 +92,7 @@ body,
 }
 
 /* Petals and sparkles floating overlays */
-.petal-layer, .sparkle-layer {
+.petal-layer, .sparkle-layer, .leaf-layer {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -109,6 +109,28 @@ body,
   animation-name: petalFloat;
   animation-timing-function: cubic-bezier(.23,.66,.58,.98);
   animation-iteration-count: infinite;
+}
+
+/* Drifting green leaves (matches petal animation) */
+.leaf {
+  position: absolute;
+  top: -8%;
+  pointer-events: none;
+  animation-name: leafFloat;
+  animation-timing-function: cubic-bezier(.23,.66,.58,.98);
+  animation-iteration-count: infinite;
+  z-index: 1;
+  filter: drop-shadow(0 6px 16px rgba(181,234,215,0.12));
+}
+
+/* Floating-leaf shake and gentle sway - mild shape variant of petals */
+@keyframes leafFloat {
+  0%   { transform: rotate(-11deg)   translateY(0) scaleX(1.01) scaleY(0.93);}
+  33%  { transform: rotate(23deg)    translateY(43vh) scale(1.10);}
+  48%  { opacity: 0.82;}
+  66%  { transform: rotate(-33deg)   translateY(81vh) scaleX(0.92) scaleY(1);}
+  83%  { opacity: 0.54;}
+  100% { transform: rotate(-20deg)   translateY(108vh) scale(1.04);}
 }
 
 /* Sakura cherry blossom SVG flower improves scaling and disables bg/box-shadow */

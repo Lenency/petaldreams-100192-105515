@@ -49,6 +49,46 @@
 }
 .whisper-close-btn:hover { color: #d94a9d; }
 
+/* Back button top left for exiting the form */
+.whisper-back-btn {
+  position: absolute;
+  top: 18px;
+  left: 16px;
+  background: linear-gradient(92deg, #fae3d9 70%, #b5ead7 100%);
+  color: #8974ae;
+  border: none;
+  border-radius: 1.3em;
+  box-shadow: 0 6px 20px -7px #b5ead755;
+  padding: 8px 23px 8px 17px;
+  font-family: Quicksand, Poppins, Arial, sans-serif;
+  font-weight: 600;
+  font-size: 1.04em;
+  cursor: pointer;
+  z-index: 11;
+  display: flex;
+  align-items: center;
+  opacity: 0.85;
+  transition: background 0.22s, color 0.17s;
+}
+.whisper-back-btn:hover, .whisper-back-btn:focus {
+  background: linear-gradient(92deg, #b5ead7 42%, #f8bbda 100%);
+  color: #d94a9d;
+  opacity: 1;
+  outline: none;
+}
+[data-theme="dark"] .whisper-back-btn {
+  background: linear-gradient(91deg, #311b35 54%, #7beccf 99%);
+  color: #fae3d9;
+  box-shadow: 0 6px 23px -8px #7beccf88;
+}
+[data-theme="dark"] .whisper-back-btn:hover,
+[data-theme="dark"] .whisper-back-btn:focus {
+  background: linear-gradient(91deg, #7beccf 44%, #231528 100%);
+  color: #f88abd;
+  opacity: 1;
+}
+
+/* Keep .whisper-close-btn top right as before */
 .whisper-form-title {
   font-family: Quicksand, Poppins, cursive;
   font-size: 2.2em;

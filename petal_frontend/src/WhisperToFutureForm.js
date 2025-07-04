@@ -62,6 +62,45 @@ function WhisperToFutureForm({ onClose }) {
   return (
     <div className="whisper-form-overlay dreamy-fadein">
       <div className="whisper-form-content dreamy-content-box">
+        {/* Back button at top left */}
+        <button
+          className="whisper-back-btn dreamy-pill"
+          type="button"
+          onClick={onClose}
+          aria-label="Back"
+          style={{
+            position: "absolute",
+            top: 18,
+            left: 16,
+            background: "linear-gradient(92deg, #FAE3D9 70%, #B5EAD7 100%)",
+            color: "#8974ae",
+            border: "none",
+            borderRadius: "1.3em",
+            boxShadow: "0 6px 20px -7px #B5EAD755",
+            padding: "8px 23px 8px 17px",
+            fontFamily: "Quicksand, Poppins, Arial, sans-serif",
+            fontWeight: 600,
+            fontSize: "1.04em",
+            cursor: "pointer",
+            zIndex: 11,
+            display: "flex",
+            alignItems: "center",
+            opacity: 0.85,
+            transition: "background 0.22s"
+          }}
+        >
+          <span style={{
+            display: "inline-block",
+            marginRight: "7px",
+            fontSize: "1.3em",
+            verticalAlign: "middle",
+            marginTop: "-2px"
+          }}>
+            {/* Unicode left arrow with soft icon style */}
+            ←
+          </span>
+          Back
+        </button>
         <button
           className="whisper-close-btn"
           onClick={onClose}

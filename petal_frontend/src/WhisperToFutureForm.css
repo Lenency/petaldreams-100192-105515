@@ -6,9 +6,12 @@
   background: rgba(248, 204, 228, 0.35);
   backdrop-filter: blur(9px) brightness(1.025);
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: stretch;
   justify-content: center;
   animation: dreamyFadeIn 0.35s cubic-bezier(.48,.02,.48,1.44);
+  /* Prevent parent scroll bleed */
+  overflow: hidden;
 }
 @keyframes dreamyFadeIn {
   from { opacity: 0; transform: translateY(24px);}
@@ -19,13 +22,20 @@
   background: linear-gradient(109deg, #faf6fa 60%, #b5ead7 109%);
   box-shadow: 0 15px 42px -12px #f8bbda8a, 0 1px 18px #f8bbda33;
   border-radius: 2.1em;
-  padding: 2.1em 2.3em 1.46em 2.3em;
+  padding: 2.6em 2.3em 2.6em 2.3em; /* Top/bottom padding for containment */
   position: relative;
   max-width: 470px;
   width: 95vw;
   min-height: 300px;
+  max-height: 86vh;
+  box-sizing: border-box;
   z-index: 9999;
   font-family: Quicksand, Poppins, Arial, Sans-Serif;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  /* Hide scrollbar for style, but keep scrollability */
+  scrollbar-width: thin;
+  scrollbar-color: #f8bbda #ffffff;
 }
 
 [data-theme="dark"] .whisper-form-content {
@@ -228,17 +238,21 @@
 
 @media (max-width: 850px) {
   .whisper-form-content {
-    padding: 1.04em 0.35em 1.14em 0.35em;
+    padding: 1.24em 0.55em 1.24em 0.55em;
     max-width: 99vw;
+    max-height: 93vh;
+    overflow-y: auto;
   }
 }
 
 @media (max-width: 700px) {
   .whisper-form-content {
-    padding: 0.55em 0.13em 1em 0.13em;
+    padding: 0.94em 0.19em 1.22em 0.19em;
     max-width: 99vw;
     min-width: 0;
     font-size: 0.96em;
+    max-height: 98vh;
+    overflow-y: auto;
   }
 }
 
@@ -249,10 +263,12 @@
     padding-right: 0.2em;
   }
   .whisper-form-content {
-    padding: 0.23em 0.09em 0.31em 0.09em;
+    padding: 0.53em 0.13em 0.64em 0.13em;
     min-width: 0;
     box-sizing: border-box;
     border-radius: 1.02em;
+    max-height: 99vh;
+    overflow-y: auto;
   }
   .whisper-form-fields {
     gap: 0.8em;

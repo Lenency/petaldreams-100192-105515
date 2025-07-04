@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./SidePanel.css";
 import WhisperToFutureForm from "./WhisperToFutureForm";
+import NotesNeverSentForm from "./NotesNeverSentForm";
 
 /**
  * PUBLIC_INTERFACE
@@ -12,6 +13,7 @@ import WhisperToFutureForm from "./WhisperToFutureForm";
 function SidePanel({ theme, onFeatureSelect }) {
   const [open, setOpen] = useState(false);
   const [showWhisperForm, setShowWhisperForm] = useState(false);
+  const [showNotesForm, setShowNotesForm] = useState(false);
 
   // Feature items with accent emojis and soft color hints.
   const features = [
@@ -99,7 +101,14 @@ function SidePanel({ theme, onFeatureSelect }) {
               key={f.key}
               onClick={() => {
                 if (onFeatureSelect) onFeatureSelect(f.key);
-                if (f.key === "whisper") setShowWhisperForm(true);
+                if (f.key === "whisper") {
+                  setShowWhisperForm(true);
+                  setShowNotesForm(false);
+                }
+                if (f.key === "notes") {
+                  setShowNotesForm(true);
+                  setShowWhisperForm(false);
+                }
               }}
               tabIndex={open ? 0 : -1}
             >
@@ -122,6 +131,10 @@ function SidePanel({ theme, onFeatureSelect }) {
       {/* Whisper to the Future Modal */}
       {showWhisperForm && open && onFeatureSelect && onFeatureSelect.lastSelected === "whisper" && (
         <WhisperToFutureForm onClose={() => setShowWhisperForm(false)} />
+      )}
+      {/* Notes Never Sent Modal */}
+      {showNotesForm && open && onFeatureSelect && onFeatureSelect.lastSelected === "notes" && (
+        <NotesNeverSentForm onClose={() => setShowNotesForm(false)} />
       )}
     </>
   );

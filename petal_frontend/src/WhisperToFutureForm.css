@@ -1,0 +1,200 @@
+.whisper-form-overlay {
+  position: fixed;
+  left: 0; top: 0; z-index: 9998;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(248, 204, 228, 0.35);
+  backdrop-filter: blur(9px) brightness(1.025);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: dreamyFadeIn 0.35s cubic-bezier(.48,.02,.48,1.44);
+}
+@keyframes dreamyFadeIn {
+  from { opacity: 0; transform: translateY(24px);}
+  to { opacity: 1; transform: none;}
+}
+
+.whisper-form-content {
+  background: linear-gradient(109deg, #faf6fa 60%, #b5ead7 109%);
+  box-shadow: 0 15px 42px -12px #f8bbda8a, 0 1px 18px #f8bbda33;
+  border-radius: 2.1em;
+  padding: 2.1em 2.3em 1.46em 2.3em;
+  position: relative;
+  max-width: 470px;
+  width: 95vw;
+  min-height: 300px;
+  z-index: 9999;
+  font-family: Quicksand, Poppins, Arial, Sans-Serif;
+}
+
+[data-theme="dark"] .whisper-form-content {
+  background: linear-gradient(112deg, #2c2034 42%, #b5ead7 105%);
+  color: #f9ecf6;
+  box-shadow: 0 13px 42px -12px #7beccf55;
+}
+
+.whisper-close-btn {
+  position: absolute;
+  top: 18px; right: 16px;
+  background: none; border: none;
+  color: #8974ae;
+  font-size: 2.1em;
+  font-family: inherit;
+  cursor: pointer;
+  opacity: 0.76;
+  z-index: 9;
+  padding: 0 7px;
+  transition: color 0.18s;
+}
+.whisper-close-btn:hover { color: #d94a9d; }
+
+.whisper-form-title {
+  font-family: Quicksand, Poppins, cursive;
+  font-size: 2.2em;
+  font-weight: 700;
+  margin-bottom: 0.23em;
+  color: #f88abd;
+  letter-spacing: -1.5px;
+  text-align: center;
+  text-shadow: 0 3px 29px #fae3d9, 0 1px 0 #fffdef;
+}
+
+.whisper-form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+
+.whisper-label {
+  font-weight: 600;
+  font-size: 1.06em;
+  margin-bottom: 0.3em;
+  color: #8974ae;
+  letter-spacing: 0.03em;
+}
+.whisper-textarea {
+  width: 100%; min-height: 100px;
+  border-radius: 1em;
+  box-shadow: 0 3px 16px -6px #f8bbda33;
+  border: 1.3px solid #fae3d9b7;
+  background: rgba(255,255,255,0.88);
+  padding: 0.88em 1.1em;
+  font-size: 1.118em;
+  font-family: Quicksand, Poppins, Arial, sans-serif;
+  color: #2c2034;
+  resize: vertical;
+  transition: border 0.22s, background 0.31s;
+}
+.whisper-textarea:focus {
+  border-color: #f8bbda;
+  background: #fff6fa;
+  outline: none;
+}
+[data-theme="dark"] .whisper-textarea {
+  color: #f9ecf6;
+  background: #311b35d1;
+  border-color: #6a47aa77;
+}
+
+.whisper-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+  margin-bottom: 0.6em;
+}
+
+.whisper-unlock-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55em 0.65em;
+  align-items: center;
+  margin-top: 0.41em;
+}
+.whisper-unlock-pill {
+  margin-left: 0.27em;
+  margin-right: 0.31em;
+  cursor: pointer;
+  font-size: 1.04em;
+}
+
+.whisper-custom-date {
+  margin-left: 0.45em;
+  margin-top: 0.1em;
+  border-radius: 1.3em;
+  border: 1px solid #f8bbda86;
+  padding: 0.13em 0.8em;
+  font-family: inherit;
+  font-size: 1.07em;
+  color: #8a6dbb;
+  background: #f0f6fa84;
+}
+
+.whisper-attachments-label {
+  font-weight: 500;
+  font-size: 1.05em;
+  color: #6e499f;
+  margin-bottom: 0.08em;
+  letter-spacing: 0.01em;
+}
+.whisper-attachments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.61em 0.33em;
+  margin-top: 0.24em;
+}
+.whisper-attachment {
+  display: flex;
+  align-items: center;
+  gap: 0.49em;
+  background: #f8bbda33;
+  border-radius: 1.5em;
+  font-size: 1em;
+  border: 1.4px solid #fae3d9a6;
+  color: #8c88aa;
+  cursor: pointer;
+  min-width: 104px;
+  padding: 0.21em 0.43em 0.21em 0.43em;
+}
+.whisper-attach-input {
+  border: none; outline: none;
+  background: transparent;
+  color: inherit; font-size: inherit;
+}
+
+.whisper-attach-tag {
+  font-size: 0.97em;
+  font-family: inherit;
+  color: #f88abd;
+  opacity: 0.77;
+}
+
+.whisper-send-btn {
+  margin-top: 0.8em;
+  min-width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.whisper-form-footer {
+  margin-top: 1.2em;
+  font-size: 0.92em;
+  color: #b088d4;
+  text-align: center;
+  opacity: 0.7;
+  letter-spacing: 0.01em;
+}
+
+@media (max-width: 700px) {
+  .whisper-form-content {
+    padding: 1.1em 0.7em 1.4em 0.7em;
+    max-width: 96vw;
+  }
+}
+
+@media (max-width: 500px) {
+  .whisper-form-title { font-size: 1.27em; }
+  .whisper-form-content { padding: 0.44em 0.15em 0.7em 0.15em; }
+  .whisper-textarea { font-size: 1em; }
+}

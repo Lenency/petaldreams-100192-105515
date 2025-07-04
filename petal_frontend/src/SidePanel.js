@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./SidePanel.css";
+import WhisperToFutureForm from "./WhisperToFutureForm";
 
 /**
  * PUBLIC_INTERFACE
@@ -10,6 +11,7 @@ import "./SidePanel.css";
  */
 function SidePanel({ theme, onFeatureSelect }) {
   const [open, setOpen] = useState(false);
+  const [showWhisperForm, setShowWhisperForm] = useState(false);
 
   // Feature items with accent emojis and soft color hints.
   const features = [
@@ -95,7 +97,10 @@ function SidePanel({ theme, onFeatureSelect }) {
             <button
               className={`panel-feature-btn dreamy-feature-btn ${f.dreamyHighlight}`}
               key={f.key}
-              onClick={() => onFeatureSelect && onFeatureSelect(f.key)}
+              onClick={() => {
+                if (onFeatureSelect) onFeatureSelect(f.key);
+                if (f.key === "whisper") setShowWhisperForm(true);
+              }}
               tabIndex={open ? 0 : -1}
             >
               <span className="feature-ico">{f.icon}</span>
@@ -114,6 +119,10 @@ function SidePanel({ theme, onFeatureSelect }) {
       </aside>
       {/* Subtle overlay when open */}
       {open && <div className="sidepanel-overlay" onClick={() => setOpen(false)} />}
+      {/* Whisper to the Future Modal */}
+      {showWhisperForm && open && onFeatureSelect && onFeatureSelect.lastSelected === "whisper" && (
+        <WhisperToFutureForm onClose={() => setShowWhisperForm(false)} />
+      )}
     </>
   );
 }

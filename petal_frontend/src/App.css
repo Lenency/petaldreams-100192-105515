@@ -1,0 +1,328 @@
+/* Petal: Dreamy Pastel Animated UI Theme */
+
+/* ===== Google Fonts loaded in JS ==== */
+body {
+  font-family: 'Poppins', 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+}
+
+:root {
+  /* Pastel theme variables */
+  --pastel-pink: #F8BBDA;
+  --pastel-green: #B5EAD7;
+  --accent: #FAE3D9;
+  --blush: #f8c8d4;
+  --mint: #c5fada;
+  --coral: #f5b29b;
+  --soft-white: #FEFCFC;
+  --primary-bg: #FEFCFC;
+  --secondary-bg: #F8BBDA;
+  --text-main: #232237;
+  --text-dream: #8974ae;
+  --overlay-glow: rgba(251,238,244,0.66);
+}
+
+[data-theme="dark"] {
+  /* Dreamy night pastel */
+  --primary-bg: #2C2D31;
+  --secondary-bg: #36143f;
+  --text-main: #fdf2f8;
+  --text-dream: #afb6fa;
+  --accent: #B5EAD7;
+  --blush: #231528;
+  --mint: #7beccf;
+  --coral: #fae3d9;
+  --soft-white: #f0e7ef;
+  --overlay-glow: rgba(55,46,71,0.79);
+}
+
+html,
+body,
+#root,
+.App {
+  background: var(--primary-bg);
+  margin: 0;
+  min-height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+  color: var(--text-main);
+  transition:
+    background 0.7s cubic-bezier(.67,.41,.35,.98),
+    color 0.7s cubic-bezier(.67,.41,.35,.98);
+}
+
+/* Main animated, layered background */
+.animated-bg {
+  position: fixed;
+  z-index: 0;
+  left: 0; top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: visible;
+  pointer-events: none;
+  user-select: none;
+  transition: filter 0.45s cubic-bezier(.7,.21,.3,1);
+  will-change: transform, filter;
+}
+.bg-gradient, .bg-gradient2 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top:0;
+  left:0;
+  pointer-events: none;
+}
+
+.bg-gradient {
+  opacity: 0.95;
+  animation: gradientShift 32s ease-in-out infinite alternate;
+}
+.bg-gradient2 {
+  opacity: 0.65;
+  mix-blend-mode: screen;
+  animation: bgRipple 39s ease-in-out infinite alternate;
+}
+
+@keyframes gradientShift {
+  0% { filter: blur(0px) hue-rotate(0deg);}
+  100% { filter: blur(2px) hue-rotate(-15deg);}
+}
+@keyframes bgRipple {
+  0% { transform: scale(1.05) translateY(0); filter: saturate(1);}
+  100% { transform: scale(1.18) translateY(-60px); filter: saturate(1.25);}
+}
+
+/* Petals and sparkles floating overlays */
+.petal-layer, .sparkle-layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0; top: 0;
+  pointer-events: none;
+}
+
+/* Drifting petals */
+.petal {
+  position: absolute;
+  top: -8%;
+  border-radius: 46% 54% 52% 48%/75% 61% 39% 53%;
+  box-shadow:
+    0 0 18px 4px rgba(255,255,255,0.15),
+    0 0 18px 0 rgba(211,118,206,0.13);
+  pointer-events: none;
+  /* Petal float animation */
+  animation-name: petalFloat;
+  animation-timing-function: cubic-bezier(.23,.66,.58,.98);
+  animation-iteration-count: infinite;
+}
+@keyframes petalFloat {
+  0%   { transform: rotate(-8deg)   translateY(0) scaleX(1) scaleY(0.92);}
+  36%  { transform: rotate(19deg)   translateY(47vh) scale(1.19);}
+  49%  { opacity: 0.9;}
+  68%  { transform: rotate(-25deg)  translateY(79vh) scaleX(0.93) scaleY(1);}
+  88%  { opacity: 0.58;}
+  100% { transform: rotate(-16deg)  translateY(106vh) scale(1.05);}
+}
+
+/* Sparkles drifting in and fading */
+.sparkle {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(0.5px);
+  background: var(--soft-white);
+  opacity: 0.17;
+  box-shadow: 0 0 18px 3px rgba(255,255,255,.18);
+  pointer-events: none;
+  animation: sparkleTwinkle infinite alternate;
+}
+
+@keyframes sparkleTwinkle {
+  0% { opacity: 0.21; transform: scale(1) translateY(0);}
+  40% { opacity: 0.50; transform: scale(1.19) translateY(-6px);}
+  65% { opacity: 0.19;}
+  100% { opacity: 0.37; transform: scale(1.29) translateY(15px);}
+}
+
+/* Softy overlay, subtle dreamy glow over everything */
+.soft-overlay {
+  pointer-events: none;
+  background: var(--overlay-glow);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left:0;top:0;
+  z-index: 2;
+  mix-blend-mode: lighten;
+  opacity: 0.24;
+  border-radius: 0 0 180vw 180vw/0 0 42vw 42vw;
+}
+
+/* Theming and components */
+.dreamy-root {
+  min-height: 100vh;
+  min-width: 100vw;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+}
+
+.theme-toggle {
+  position: fixed;
+  top: 20px; right:20px;
+  z-index: 1001;
+  background: linear-gradient(95deg, var(--mint), var(--blush));
+  color: var(--text-main);
+  border: none;
+  border-radius: 99em;
+  font-family: inherit;
+  font-weight: 600;
+  padding: 11px 28px 11px 22px;
+  font-size: 1.1rem;
+  box-shadow: 0 6px 32px -6px rgba(254,188,219,0.24), 0 1px 2px #dcdbe5;
+  cursor: pointer;
+  transition: box-shadow 0.25s, background 0.36s, filter 0.36s, color 0.24s;
+}
+.theme-toggle:active { filter: brightness(0.98); }
+.theme-toggle:hover { box-shadow: 0 9px 40px -7px var(--blush, #F8BBDA); filter: brightness(1.02);}
+[data-theme="dark"] .theme-toggle {
+  background: linear-gradient(95deg, #311b35, #7beccf 90%);
+  color: var(--soft-white);
+}
+
+.main-content {
+  width: 100vw;
+  min-height: 95vh;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 2; position: relative;
+  margin-top: 7vh;
+  font-family: 'Poppins', 'Quicksand', sans-serif;
+  text-shadow: 0 1px 2px #f9ecf6;
+}
+.content-inner {
+  padding: 2rem 2.2rem;
+  border-radius: 30px;
+  box-shadow: 0 11px 30px -8px var(--accent, #fae3d9);
+  background: rgba(255,255,255,0.62);
+  max-width: 540px;
+  margin: 2rem auto;
+  backface-visibility: hidden;
+  transition: background 0.7s, box-shadow 0.7s;
+}
+[data-theme="dark"] .content-inner {
+  background: rgba(35,18,40,0.68);
+  box-shadow: 0 11px 34px -12px var(--mint, #B5EAD7);
+  text-shadow: 0 1px 10px #251c31;
+}
+
+.petal-title {
+  font-family: 'Quicksand', 'Poppins', cursive, sans-serif;
+  font-size: 3.1rem;
+  margin: 0 0 0.2em 0;
+  letter-spacing: -2px;
+  font-weight: 700;
+  color: var(--pastel-pink);
+  text-shadow: 0 3px 38px #fae3d9, 0 1px 0 #fffdef;
+  text-align: center;
+}
+
+.petal-subtitle {
+  margin: 0 0 0.7em 0;
+  color: var(--text-dream);
+  font-family: 'Poppins', 'Quicksand';
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.42;
+  text-align: center;
+  filter: brightness(0.95);
+}
+
+.desc {
+  color: #868daa;
+  font-size: 1.07rem;
+  margin: 0 0 1.4em 0;
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+[data-theme="dark"] .desc {
+  color: #d7e6fa;
+  text-shadow: 0 2px 8px #241a2c, 0 3px 14px #251c37;
+}
+
+/* Dreamy call to action button */
+.dreamy-cta-btn {
+  background: linear-gradient(90deg, var(--mint), var(--accent));
+  color: var(--text-main);
+  border: none;
+  border-radius: 2.8em;
+  font-family: 'Poppins', 'Quicksand', Arial, sans-serif;
+  font-style: normal;
+  font-size: 1.16rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 0.84em 2.6em;
+  margin: 16px auto 0 auto;
+  box-shadow: 0 7px 34px -7px var(--blush), 0 1px 2px #ececec;
+  cursor: pointer;
+  outline: none;
+  transition: box-shadow 0.2s, background 0.26s, transform 0.14s ease-out;
+  display: block;
+}
+
+.dreamy-cta-btn:hover {
+  background: linear-gradient(90deg, var(--coral), var(--accent) 85%);
+  color: var(--text-dream, #a37cce);
+  box-shadow: 0 14px 44px -10px var(--coral), 0 1px 3px #eee;
+  transform: scale(1.036) translateY(-2px);
+}
+[data-theme="dark"] .dreamy-cta-btn {
+  background: linear-gradient(80deg, #2e4454, #84e9c7 94%);
+  color: var(--soft-white);
+}
+[data-theme="dark"] .dreamy-cta-btn:hover {
+  background: linear-gradient(80deg, #452e79, #fae3d9 78%);
+  color: #aabeec;
+}
+
+.footer {
+  padding: 1.2em 0 1.1em 0;
+  background: transparent;
+  color: #bdb9b2;
+  text-align: center;
+  font-size: 1.09rem;
+  font-family: Quicksand, Poppins, Arial, Sans-Serif;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+  opacity: 0.95;
+  margin-bottom: 0;
+  margin-top: 2em;
+  z-index: 2;
+  pointer-events: auto;
+}
+[data-theme="dark"] .footer { color: #807aa0; opacity: 0.7;}
+
+@media (max-width: 860px) {
+  .content-inner {
+    padding: 1.1rem 0.5rem 2.5rem 0.5rem;
+    max-width: 94vw;
+  }
+  .main-content {
+    min-height: 79vh;
+    padding-top: 3vh;
+  }
+  .theme-toggle {
+    top: 10px; right:6px; padding: 7px 17px 7px 15px; font-size: 1rem;
+  }
+}
+
+/* Hide some text on mobile */
+@media (max-width: 520px) {
+  .mobile-hide {display: none;}
+  .petal-title { font-size: 2.13rem; }
+}
+
+/* Accessibility: prefers reduced motion disables major animations */
+@media (prefers-reduced-motion: reduce) {
+  *, *:before, *:after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

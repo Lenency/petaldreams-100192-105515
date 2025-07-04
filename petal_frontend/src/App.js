@@ -276,7 +276,7 @@ function Content({ theme }) {
       <div className="content-inner">
         <h1 className="petal-title">petal</h1>
         <h2 className="petal-subtitle">
-          A whimsical world of gentle color, drifting petals, and digital calm.
+          A place where you can write letters to your future self, your past self, or someone you love—but never send them. Just store them like pressed flowers. Beautiful. Private. Timeless. 💌🌷
         </h2>
         <p className="desc">
           Dream, write, journal, or simply breathe—Petal’s relaxing animated background soothes your screen, day or night.<br />

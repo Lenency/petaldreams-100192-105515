@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./App.css";
+import SidePanel from "./SidePanel";
 
 /**
  * AnimatedPetalsBackground: Layered, animated pastel gradient background with
@@ -307,6 +308,8 @@ function Footer() {
 // PUBLIC_INTERFACE
 function App() {
   const [theme, setTheme] = useState("light");
+  // Tracks last selected side panel feature for panel UI (e.g., prepping for Whisper preview)
+  const [lastSelectedFeature, setLastSelectedFeature] = useState(null);
 
   // Font loading (Google Fonts CDN for Poppins/Quicksand)
   useEffect(() => {
@@ -329,9 +332,20 @@ function App() {
   const toggleTheme = () =>
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
 
+  // Handler for feature selection in the panel
+  const handleFeatureSelect = (feature) => {
+    setLastSelectedFeature(feature);
+    // In a full app: would route to feature workflows here
+  };
+  // Enhance to allow the SidePanel to get current state for Whisper preview area
+  const enhancedFeatureSelect = Object.assign(handleFeatureSelect, {
+    lastSelected: lastSelectedFeature,
+  });
+
   return (
     <div className={`App dreamy-root ${theme}`}>
       <AnimatedPetalsBackground theme={theme} />
+      <SidePanel theme={theme} onFeatureSelect={enhancedFeatureSelect} />
       <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
       <Content theme={theme} />
       <Footer />

@@ -104,15 +104,22 @@ body,
 .petal {
   position: absolute;
   top: -8%;
-  border-radius: 46% 54% 52% 48%/75% 61% 39% 53%;
-  box-shadow:
-    0 0 18px 4px rgba(255,255,255,0.15),
-    0 0 18px 0 rgba(211,118,206,0.13);
   pointer-events: none;
   /* Petal float animation */
   animation-name: petalFloat;
   animation-timing-function: cubic-bezier(.23,.66,.58,.98);
   animation-iteration-count: infinite;
+}
+
+/* Sakura cherry blossom SVG flower improves scaling and disables bg/box-shadow */
+.cherry-sakura {
+  background: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
 }
 @keyframes petalFloat {
   0%   { transform: rotate(-8deg)   translateY(0) scaleX(1) scaleY(0.92);}

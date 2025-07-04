@@ -36,32 +36,98 @@ function AnimatedPetalsBackground({ theme }) {
           "radial-gradient(circle at 60% 30%, #FAE3D9 0%, #B5EAD7 80%)",
         ];
 
-  // Generate drifting petals using CSS
+  // Generate drifting cherry blossom flowers using SVG
   const petalCount = 12;
   const petalEls = [];
   for (let i = 0; i < petalCount; i++) {
     const time = 16 + Math.random() * 12; // seconds
     const delay = -Math.random() * time;
     const left = 10 + Math.random() * 80;
-    const size = 40 + Math.random() * 34;
-    const pastelR = [248, 181, 250][Math.floor(Math.random() * 3)];
-    const pastelG = [187, 234, 227][Math.floor(Math.random() * 3)];
-    const pastelB = [218, 215, 217][Math.floor(Math.random() * 3)];
-    const pastel = `rgba(${pastelR},${pastelG},${pastelB},0.62)`;
+    const size = 42 + Math.random() * 36;
+    const rotation = Math.random() * 360;
+    const opacity = 0.72 + Math.random() * 0.19;
+    const pastelPink = theme === "dark" ? "#fbe6fa" : "#F8BBDA";
+    const pastelWhite = theme === "dark" ? "#cdb0dc" : "#FEFCFC";
+    // Render SVG for sakura flower
     petalEls.push(
       <div
         key={i}
-        className="petal"
+        className="petal cherry-sakura"
         style={{
           left: `${left}%`,
           width: size,
-          height: size * 0.7,
-          opacity: 0.8,
-          background: pastel,
+          height: size,
+          opacity,
           animationDuration: `${time}s`,
           animationDelay: `${delay}s`,
+          transform: `rotate(${rotation}deg)`,
         }}
-      />
+      >
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 64 64"
+          fill="none"
+          style={{ display: "block" }}
+        >
+          <g>
+            <ellipse
+              cx="32"
+              cy="15"
+              rx="13"
+              ry="18"
+              fill={pastelPink}
+              opacity="0.84"
+              />
+            <ellipse
+              cx="52"
+              cy="33"
+              rx="12"
+              ry="18"
+              fill={pastelPink}
+              opacity="0.84"
+              transform="rotate(55 52 33)"
+            />
+            <ellipse
+              cx="32"
+              cy="56"
+              rx="13"
+              ry="18"
+              fill={pastelPink}
+              opacity="0.84"
+              />
+            <ellipse
+              cx="12"
+              cy="33"
+              rx="12"
+              ry="18"
+              fill={pastelPink}
+              opacity="0.84"
+              transform="rotate(-55 12 33)"
+            />
+            <ellipse
+              cx="32"
+              cy="35"
+              rx="11"
+              ry="14"
+              fill={pastelPink}
+              opacity="0.96"
+              />
+            <circle
+              cx="32"
+              cy="33"
+              r="7.5"
+              fill={pastelWhite}
+              opacity="0.88"
+            />
+            <circle cx="29" cy="29" r="1.1" fill="#efb2c0" />
+            <circle cx="35" cy="29" r="1.1" fill="#edbbd8" />
+            <circle cx="33" cy="33" r="1.1" fill="#f3e5ef" />
+            <circle cx="30" cy="36" r="0.8" fill="#edbbd8" />
+            <circle cx="34" cy="36" r="0.7" fill="#efb2c0" />
+          </g>
+        </svg>
+      </div>
     );
   }
 

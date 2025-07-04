@@ -228,69 +228,231 @@ function NotesNeverSentForm({ onClose }) {
   );
 }
 
-// Fiery animated SVG for "Burn" effect
-function BurnPetalAnimation() {
+/**
+ * BurningLetterAnimation: visually "burns away" a letter with SVG/CSS.
+ * Used when "Burn" is selected in NotesNeverSentForm. Self-contained, does not affect other UI.
+ */
+// PUBLIC_INTERFACE
+function BurningLetterAnimation() {
+  // Show burning effect with SVG mask, animated flames, and burn-away paper.
   return (
-    <div style={{
-      minHeight: "160px",
-      width: "100%",
-      display: "flex", justifyContent: "center", alignItems: "center",
-      pointerEvents: "none"
-    }}>
-      {/* Animated SVG: flaming cherry blossom */}
-      <svg width={142} height={142} viewBox="0 0 128 128">
-        <g>
-          {/* Fire animation (fades in, rises, flickers) */}
-          <g style={{
-            transformOrigin: "64px 82px",
-            animation: "petalFlameRise 1.7s cubic-bezier(.41,.11,.53,1.13)",
-            opacity: 0.91
-          }}>
-          <ellipse cx="64" cy="98" rx="27" ry="18" fill="#ffcaca" opacity="0.46" />
-          <path
-            d="M64 127 Q77 110 83 97 Q93 74 81 80 Q76 74 79 64 Q72 70 67 64 Q65 67 58 63 Q60 73 52 67 Q55 85 45 96 Q58 117 64 127 Z"
+    <div
+      style={{
+        width: 200,
+        height: 200,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        pointerEvents: "none",
+        background: "none",
+        userSelect: "none",
+      }}
+    >
+      <svg
+        viewBox="0 0 200 200"
+        width={180}
+        height={180}
+        style={{ overflow: "visible" }}
+      >
+        <defs>
+          <linearGradient id="paperGradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#faf6fa" />
+            <stop offset="80%" stopColor="#fae3d9" />
+            <stop offset="100%" stopColor="#f5b29b" />
+          </linearGradient>
+          <clipPath id="burnClip">
+            {/* Animate mask up to gradually "burn" the paper */}
+            <rect
+              id="burn-rect"
+              x="0"
+              y="0"
+              width="200"
+              height="200"
+              style={{
+                animation:
+                  "burnAwayMask 1.6s 1 cubic-bezier(.48,.03,.86,1) forwards",
+              }}
+            />
+          </clipPath>
+          <filter id="paperBurn" x="0" y="0" width="200" height="200">
+            <feTurbulence
+              id="turb"
+              type="fractalNoise"
+              baseFrequency="0.09 0.23"
+              numOctaves="1"
+              seed="6"
+              result="turb"
+            />
+            <feDisplacementMap in2="turb" in="SourceGraphic" scale="9" />
+          </filter>
+        </defs>
+        {/* Paper letter */}
+        <g clipPath="url(#burnClip)">
+          <rect
+            x="18"
+            y="40"
+            width="164"
+            height="100"
+            rx="20"
+            fill="url(#paperGradient)"
+            filter="url(#paperBurn)"
             style={{
-              fill: "url(#petalFire)",
-              stroke: "#f99982",
-              strokeWidth: 1.1,
-              opacity: 0.93,
+              stroke: "#f8bbda",
+              strokeWidth: 3,
+              transition: "fill .4s",
+            }}
+          />
+          {/* Fold lines, address, text lines */}
+          <rect
+            x="28"
+            y="50"
+            width="60"
+            height="14"
+            rx="4"
+            fill="#e9cae4"
+            opacity="0.62"
+          />
+          <rect
+            x="28"
+            y="70"
+            width="124"
+            height="9"
+            rx="6"
+            fill="#eccfda"
+            opacity="0.24"
+          />
+          <rect
+            x="28"
+            y="84"
+            width="124"
+            height="9"
+            rx="6"
+            fill="#eccfda"
+            opacity="0.17"
+          />
+          <rect
+            x="28"
+            y="98"
+            width="110"
+            height="8"
+            rx="5"
+            fill="#eec4d6"
+            opacity="0.13"
+          />
+          <rect
+            x="28"
+            y="110"
+            width="80"
+            height="8"
+            rx="4"
+            fill="#eec4d6"
+            opacity="0.18"
+          />
+          {/* Bottom folded triangle for classic letter look */}
+          <polygon
+            points="100,130 44,140 156,140"
+            fill="#fde8e5"
+            opacity="0.77"
+          />
+        </g>
+        {/* Burn edge with red/orange glow, animated upward */}
+        <g>
+          <ellipse
+            id="burn-glow"
+            cx="100"
+            cy="132"
+            rx="68"
+            ry="10"
+            fill="url(#burnGradient)"
+            opacity="0.82"
+            style={{
+              filter: "blur(7px)",
+              animation: "burnGlowRise 1.6s forwards cubic-bezier(.46,.03,.6,1)",
             }}
           />
           <defs>
-            <radialGradient id="petalFire" cx="50%" cy="30%" r="60%">
-              <stop offset="0%" stopColor="#ffa276" stopOpacity="0.98" />
-              <stop offset="56%" stopColor="#fae3d9" stopOpacity="0.96" />
-              <stop offset="100%" stopColor="#f88abd" stopOpacity="0.81" />
+            <radialGradient id="burnGradient" cx="50%" cy="50%" r="100%">
+              <stop offset="0%" stopColor="#ffded6" stopOpacity="0.82" />
+              <stop offset="75%" stopColor="#ff9444" stopOpacity="0.62" />
+              <stop offset="100%" stopColor="#f88abd" stopOpacity="0" />
             </radialGradient>
           </defs>
-          </g>
         </g>
-        {/* Floating petals burning away */}
-        <g>
-          <PetalFadeFlame />
-          <PetalFadeFlame delay={0.38} />
-          <PetalFadeFlame delay={0.82} />
+        {/* Flickering flames at burn edge */}
+        <g className="burn-flames">
+          {[...Array(6)].map((_, i) => (
+            <path
+              key={i}
+              d={
+                `M${60 + i * 16},130 ` +
+                "Q" +
+                (65 + i * 16) +
+                "," +
+                (120 + (Math.random() * 11 - 4)) +
+                " " +
+                (70 + i * 16) +
+                ",130"
+              }
+              fill="none"
+              stroke="#fb8d4a"
+              strokeWidth={3.7 - 1.2 * (i % 2)}
+              opacity={0.93 - 0.11 * i}
+              style={{
+                filter: "blur(0.9px)",
+                strokeLinejoin: "round",
+                strokeLinecap: "round",
+                animation: `flameFlicker .5s ${i * 0.09}s infinite alternate`,
+              }}
+            />
+          ))}
         </g>
+        {/* Burned paper edges - brown fade, animates up */}
+        <ellipse
+          id="burnd"
+          cx="100"
+          cy="136"
+          rx="66"
+          ry="7"
+          fill="#eebaa8"
+          opacity="0.25"
+          style={{
+            filter: "blur(2px)",
+            animation: "burnGlowRise 1.6s forwards",
+          }}
+        />
       </svg>
-      {/* Fire animation keyframes */}
+      {/* Animation keyframes */}
       <style>
-      {`
-      @keyframes petalFlameRise {
-        0% { transform: scaleY(0.6) translateY(34px); opacity: 0;}
-        54% { opacity: 1;}
-        97% { opacity: 1;}
-        100% { transform: scaleY(1.01) translateY(0); opacity: 0; }
-      }
-      @keyframes petalFadeBurn {
-        0% { opacity: 1; transform: translateY(0) scale(1);}
-        61% { opacity: 0.85;}
-        85% { opacity: 0.23;}
-        100% { opacity: 0; transform: translateY(-20px) scale(1.23);}
-      }
-      `}
+        {`
+        @keyframes burnAwayMask {
+          0% { height: 200px;}
+          87% { height: 200px;}
+          90% { height: 89px;}
+          100% { height: 0px;}
+        }
+        @keyframes burnGlowRise {
+          0% { transform: translateY(0);}
+          82% { opacity:1; }
+          95% { opacity:0.6; }
+          100% { transform: translateY(-110px); opacity:0; }
+        }
+        @keyframes flameFlicker {
+          0% { stroke: #fb8d4a;}
+          44% { stroke: #ffde99;}
+          75% { stroke: #ffad9a;}
+          100% { stroke: #d94a0a;}
+        }
+        `}
       </style>
     </div>
   );
+}
+
+// Fiery animated SVG for "Burn" effect
+function BurnPetalAnimation() {
+  // For backward compatibility, provide previous look as fallback,
+  // but for "Burn" destruction, use BurningLetterAnimation.
+  return <BurningLetterAnimation />;
 }
 
 // Small burning petal, animated upward fade
